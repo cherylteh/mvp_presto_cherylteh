@@ -10,10 +10,20 @@ const getAllEvents = (req, res) => {
     .catch(err => console.log(err));
 };
 
-/* GET All Events (by Id) - WORKS */
+/* GET All Events - WORKS
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
   db("SELECT * FROM event ORDER BY id ASC;")
+    .then(results => {
+      res.send(results.data);
+    })
+    .catch(err => res.status(500).send(err));
+}); */
+
+/* GET All Events (with date formatted) - WORKS */
+router.get('/', function(req, res, next) {
+  //res.send('respond with a resource');
+  db("SELECT eventName, location, DATE_FORMAT(date, '%e %M, %Y') FROM event;")
     .then(results => {
       res.send(results.data);
     })
@@ -50,6 +60,7 @@ router.post("/", function(req, res, next) {
     console.log(`UPDATE event SET 
     eventName ="${req.body.eventName}", 
     location ="${req.body.location}" 
+    date = ${req.body.date}, 
     WHERE id =${req.params.id};`);
     // console.log(req.params.id); // just to check, not necessary
     db(`UPDATE event SET 
