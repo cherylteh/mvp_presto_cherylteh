@@ -10,7 +10,7 @@ const getAllEvents = (req, res) => {
     .catch(err => console.log(err));
 };
 
-/* GET All Events - WORKS
+/* GET All Events - WORKS */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
   db("SELECT * FROM event ORDER BY id ASC;")
@@ -18,9 +18,9 @@ router.get('/', function(req, res, next) {
       res.send(results.data);
     })
     .catch(err => res.status(500).send(err));
-}); */
+});
 
-/* GET All Events (with date formatted) - WORKS */
+/* GET All Events (with date formatted) - WORKS 
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
   db("SELECT eventName, location, DATE_FORMAT(date, '%e %M, %Y') FROM event;")
@@ -28,7 +28,7 @@ router.get('/', function(req, res, next) {
       res.send(results.data);
     })
     .catch(err => res.status(500).send(err));
-});
+}); */
 
 // GET one Event by Id - WORKS!
 router.get("/:id", function(req, res, next) {

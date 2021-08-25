@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
-//import { makeStyles } from '@material-ui/core/styles';
-//import Box from '@material-ui/core/Box';
-//import Button from "@material-ui/core/Button";
-//import Container from '@material-ui/core/Container';
-//import { Grid } from '@material-ui/core';
-//import TextField from '@material-ui/core/TextField';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Box from '@material-ui/core/Box';
+// import Button from "@material-ui/core/Button";
+// import Container from '@material-ui/core/Container';
+// import { Grid } from '@material-ui/core';
+// import TextField from '@material-ui/core/TextField';
 
 //project is getter, 
 //setProject is setter
 export const Event = () => {
     let [event, setEvent] = useState([]);
     let [input, setInput] = useState({});
+    //let [formattedDate, setFormattedDate ] = useState([]);
 
     useEffect(() => {
         getEvents();
     }, []);
-
-    let date = new Date(Date.UTC)
-    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
   
     const getEvents = () => {
@@ -25,21 +23,51 @@ export const Event = () => {
             .then(response => response.json())
             .then(event => {
                 console.log(event);
+
+                //setEvent(event); 
+             
+                // for(let eachEvent of event) {
+                //     let tmpDate = eachEvent.date;
+                //     eachEvent.date  = formatDate(tmpDate);
+                // }
+
+                 for(let i=0; i<event.length; i++){
+                    let tmpDate = event[i].date;
+                    event[i].date  = `${formatDate(tmpDate)}`;
+                    console.log(event[i].date);
+                }
                 setEvent(event);
             })
             .catch(error => {
-                console.log("Error");
+                console.log("Error in GetEvents", error.message);
             });
     };
+
+    const formatDate = (savedDate) => {
+        if(savedDate === null) return ""; 
+      // Split timestamp into [ Y, M, D, h, m, s ]
+      let t = savedDate.split(/[-T:.]/);
+
+      // Apply each element to the Date function
+      let newFormat = new Date(Date.UTC(t[0], t[1]-1, t[2]));
+      //let newFormat = new Date(Date.UTC);
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+      newFormat.toLocaleDateString(undefined, options)
+      console.log(newFormat);
+
+      return newFormat;
+    }
+
+    const handleChange = e => {
+        //console.log(e.target.value);
+        setInput({ ...input, [e.target.name]: e.target.value});
+        //console.log(input)
+      };
 
     const handleSubmit = e => {
         addEvent();
     };
-
-    const handleChange = e => {
-        console.log(e.target.data);
-        setInput({ ...input, [e.target.eventName]: e.target.location});
-      };
 
     const handleRemove = (e, id) => {
         console.log(id);
@@ -58,7 +86,6 @@ export const Event = () => {
             return res.json();
           })
           .then(data => {
-            //setStudents(data);
             console.log("New Event Added", data);
           })
           .catch(err => {
@@ -68,7 +95,7 @@ export const Event = () => {
 
 
       const deleteEvent = id => {
-        //console.log("in Fetch", id); //to check if it's passing through
+        //console.log("in Fetch", id); 
         fetch(`/event/${id}`, {
           method: "DELETE",
           headers: {
@@ -89,67 +116,20 @@ export const Event = () => {
           });
       };
 
-  
+      
+      
 
+  
   return (
     <div>
-    <h3>ADD NEW EVENT</h3>
-
-    <div className="bg-success p-2 text-white bg-opacity-10">
-        <form onSubmit={e => handleSubmit(e)}>
-          
-          <label htmlFor="eventName" className="form-label">
-            Event name:
-          </label>
-          <input
-            name="eventName"
-            id="eventName"
-            type="text"
-            value={input.eventName}
-            onChange={e => handleChange(e)}
-          ></input>{" "}
-          &nbsp;
-          
-          <label htmlFor="location" className="form-label">
-            Location:
-          </label>
-          <input
-            name="location"
-            id="location"
-            type="text"
-            value={input.location}
-            onChange={e => handleChange(e)}
-          ></input>{" "}
-          &nbsp;
-
-          <label htmlFor="date" className="form-label">
-            Location:
-          </label>
-          <input
-            name="date"
-            id="date"
-            type="date"
-            value={input.date}
-            onChange={e => handleChange(e)}
-          ></input>{" "}
-          &nbsp;
-
-          <button
-            type="submit"
-            className="btn btn-outline-light"
-            value="submit"
-          > SUBMIT
-          </button>
-        </form>
-      </div>
+    <h3>EVENT LISTING</h3>
 
     <div>
-          {event.map(item => {
+          {event.map((item) => {
             return (
               <tr key={item.id}>
                 <td>{item.eventName}</td>
                 <td>{item.location}</td>
-                {/* <td>{item.date}</td> */}
                 <td>{item.date}</td>
                 <td>
                   <button
@@ -166,8 +146,58 @@ export const Event = () => {
               </tr>
             );
           })}
-        
     </div>
+
+    <h3>ADD NEW EVENT</h3>
+    <div className="bg-success p-2 text-white bg-opacity-10">
+        <form onSubmit={e => handleSubmit(e)}>
+          
+          <label htmlFor="eventName" className="form-label">
+            Event name:
+          </label>
+          <input
+            name="eventName"
+            id="eventName"
+            type="text"
+            
+            onChange={(e) => handleChange(e)}
+          ></input>{" "}
+          &nbsp;
+          
+          <label htmlFor="location" className="form-label">
+            Location:
+          </label>
+          <input
+            name="location"
+            id="location"
+            type="text"
+            //value={input.location}
+            onChange={(e) => handleChange(e)}
+          ></input>{" "}
+          &nbsp;
+
+          <label htmlFor="date" className="form-label">
+            Date:
+          </label>
+          <input
+            name="date"
+            id="date"
+            type="date"
+            //value={input.date}
+            onChange={(e) => handleChange(e)}
+          ></input>{" "}
+          &nbsp;
+
+          <button
+            type="submit"
+            className="btn btn-outline-light"
+            value="submit"
+          > SUBMIT
+          </button>
+        </form>
+      </div>
+
+    
     </div>
   )
 }

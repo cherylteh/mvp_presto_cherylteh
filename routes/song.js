@@ -4,7 +4,9 @@ const db = require("../model/helper");
 
 const getAllSongs = (req, res) => {
   db("SELECT * FROM songlib ORDER BY id ASC;")
-    .then(results => res.send(results.data))
+    .then(results => {
+      res.send(results.data);
+    })
     .catch(err => console.log(err));
 };
 
