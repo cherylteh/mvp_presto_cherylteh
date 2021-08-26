@@ -104,8 +104,8 @@ export const Song = () => {
     <Table className={classes.table} size="small" aria-label="customized table">
         <TableHead>
             <TableRow>
-                <TableCell>TITLE</TableCell>
-                <TableCell>COMPOSER</TableCell>
+                <TableCell><h4>TITLE</h4></TableCell>
+                <TableCell><h4>COMPOSER</h4></TableCell>
             </TableRow>
         </TableHead>
 

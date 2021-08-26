@@ -100,7 +100,6 @@ export const Event = () => {
     }
  */
 
-
     const formatDate = (savedDate) => {
         if(savedDate === null) return ""; 
       
@@ -112,6 +111,12 @@ export const Event = () => {
         //console.log(newFormat);
 
         return newFormat;
+        }
+
+        const newFormat = (savedDate) => {
+            let newFormat = new Date(savedDate)
+            newFormat.setMinutes(savedDate.getMinutes() - savedDate.getTimezoneOffset());
+            return newFormat;
         }
 
 
@@ -173,14 +178,14 @@ export const Event = () => {
   
   return (
     <div>
-    <h3>EVENT LISTING</h3>
+    <h3>EVENT LIST</h3>
     <TableContainer component={Paper}>
     <Table className={classes.table} size="small" aria-label="customized table">
         <TableHead>
             <TableRow>
-                <TableCell>DATE</TableCell>
-                <TableCell>EVENT</TableCell>
-                <TableCell>LOCATION</TableCell>
+                <TableCell><h4>DATE</h4></TableCell>
+                <TableCell><h4>EVENT</h4></TableCell>
+                <TableCell><h4>LOCATION</h4></TableCell>
             </TableRow>
         </TableHead>
 

@@ -5,7 +5,7 @@ const db = require("../model/helper");
 //localhost:5000/event
 
 const getAllEvents = (req, res) => {
-  db("SELECT * FROM event ORDER BY id ASC;")
+  db("SELECT * FROM event ORDER BY id DESC;")
     .then(results => res.send(results.data))
     .catch(err => console.log(err));
 };
@@ -13,7 +13,7 @@ const getAllEvents = (req, res) => {
 /* GET All Events - WORKS */
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
-  db("SELECT * FROM event ORDER BY id ASC;")
+  db("SELECT * FROM event ORDER BY date DESC;")
     .then(results => {
       res.send(results.data);
     })
