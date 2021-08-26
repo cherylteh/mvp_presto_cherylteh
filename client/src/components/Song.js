@@ -1,8 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { TextField } from '@material-ui/core';
+import Button from "@material-ui/core/Button";
 
 export const Song = () => {
   let [song, setSong] = useState([]);
   let [input, setInput] = useState({});
+
+  const useStyles = makeStyles({
+    table: {
+      minWidth: 800,
+      backgroundColor: "#F4ECF7",
+    },
+  });
+
+  const classes = useStyles();
 
   useEffect(() => {
       getSong();
@@ -80,64 +100,76 @@ export const Song = () => {
   return (
   <div>
      <h3>SONG LIST</h3>
- 
-  <div> 
+    <TableContainer component={Paper}>
+    <Table className={classes.table} size="small" aria-label="customized table">
+        <TableHead>
+            <TableRow>
+                <TableCell>TITLE</TableCell>
+                <TableCell>COMPOSER</TableCell>
+            </TableRow>
+        </TableHead>
+
+    <TableBody>   
     {song.map(item => {
       return (
-        <tr key={item.id}>
-          <td>{item.title}</td>
-          <td>{item.composer}</td>
-          <td>
-            <button
+        <TableRow key={item.id}>
+          <TableCell>{item.title}</TableCell>
+          <TableCell>{item.composer}</TableCell>
+          <TableCell>
+            <DeleteIcon
+              Color="secondary"
               type="submit"
               value="submit"
-              className="btn btn-outline-primary btn-sm"
+              //className="btn btn-outline-primary btn-sm"
               onClick={e => {
                 handleRemove(e, item.id);
               }}
-            >
-            REMOVE
-            </button>
-          </td>
-        </tr>
-      );
+            />
+          </TableCell>
+        </TableRow>
+      )
     })}
-  </div>
+    </TableBody>
+  </Table>
+  </TableContainer> 
 
   <h3>ADD NEW SONG</h3>
     <div className="bg-success p-2 text-white bg-opacity-10">
         <form onSubmit={e => handleSubmit(e)}>
           
-          <label htmlFor="title" className="form-label">
+          {/* <label htmlFor="title" className="form-label">
             Song Title:
-          </label>
-          <input
+          </label> */}
+          <TextField
+            label="Song Title"
             name="title"
             id="title"
             type="text"
             // value={input.title}
             onChange={e => handleChange(e)}
-          ></input>{" "}
+          />{" "}
           &nbsp;
           
-          <label htmlFor="composer" className="form-label">
+          {/* <label htmlFor="composer" className="form-label">
             Composer:
-          </label>
-          <input
+          </label> */}
+          <TextField
+            label="Composer"
             name="composer"
             id="composer"
             type="text"
             //value={input.composer}
             onChange={e => handleChange(e)}
-          ></input>{" "}
+          />{" "}
           &nbsp;
 
-          <button
+          <Button
+            variant="outlined"
             type="submit"
             className="btn btn-outline-light"
             value="submit"
           > SUBMIT
-          </button>
+          </Button>
         </form>
       </div>
 
