@@ -3,12 +3,14 @@ import Song from "./components/Song";
 import Event from "./components/Event";
 //import "./App.css";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+//import { flexbox } from '@material-ui/system';
 import Button from "@material-ui/core/Button";
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Typography from '@material-ui/core/Typography';
+//import ButtonBase from '@material-ui/core/ButtonBase';
+//import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
+//import Divider from '@material-ui/core/Divider';
+//import Grid from '@material-ui/core/Grid';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
 // import TextField from '@material-ui/core/TextField';
 
@@ -54,8 +56,14 @@ function App() {
   return (
   <div className={classes.root}>  
   <Container maxWidth="md">
-      
-    <Grid container spacing={1}
+
+     <Box display="flex" flexDirection="row" flexWrap="wrap" >
+      <Box flexGrow={1}><img src = "https://i.postimg.cc/J45dRFFp/logo-presto-1.jpg" alt="Presto Logo"/></Box> 
+      <Box><Button onClick={() => handleChangeView(true)}>Event List</Button></Box>
+      <Box alignItems="flex-end"><Button color="primary" onClick={() => handleChangeView(false)}>Song List</Button></Box>
+     </Box>
+
+    {/* <Grid container spacing={1}
           direction="row">
       <Grid item xs={7} justifyContent="flex-start">
       <img src = "https://i.postimg.cc/J45dRFFp/logo-presto-1.jpg" alt="Presto Logo"/>
@@ -65,14 +73,12 @@ function App() {
         
         <div><Button onClick={() => handleChangeView(true)}>Event List</Button> &nbsp; 
         <Button color="primary" onClick={() => handleChangeView(false)}>Song List</Button></div>
-      </Grid>
+      </Grid> */}
 
     {
       (isEvent) ? <Event/> : <Song/>     
     }  
 
-    </Grid>
-    <Divider variant="middle" />
   </Container>
   </div>
   

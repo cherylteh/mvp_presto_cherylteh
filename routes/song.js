@@ -74,7 +74,7 @@ router.get("/composer/:composer", function(req, res, next) {
 router.post("/", function(req, res, next) {
   //let newSong = req.body;
   db(
-    `INSERT INTO songlib (title,composer) VALUES("${req.body.title}", "${req.body.composer}")`
+    `INSERT INTO songlib (title,composer,parts) VALUES("${req.body.title}", "${req.body.composer}", "${req.body.parts}")`
   )
     .then(results => {
       getAllSongs(req, res); // get full list of Songs
@@ -89,12 +89,14 @@ router.put("/:id", (req, res, next) => {
   // let newItems = req.body;
   console.log(`UPDATE songlib SET 
   title ="${req.body.title}", 
-  composer ="${req.body.composer}" 
+  composer ="${req.body.composer}", 
+  parts ="${req.body.parts}" 
   WHERE id =${req.params.id};`);
   // console.log(req.params.id); // just to check, not necessary
   db(`UPDATE songlib SET 
       title ="${req.body.title}", 
-      composer ="${req.body.composer}" 
+      composer ="${req.body.composer}",
+      parts ="${req.body.parts}"  
       WHERE id =${req.params.id};`)
     .then(results => {
       getAllSongs(req, res); // should get back full list of items

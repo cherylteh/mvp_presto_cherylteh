@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Button from "@material-ui/core/Button";
+import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,9 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
 import { TextField } from '@material-ui/core';
-import Button from "@material-ui/core/Button";
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 export const Song = () => {
   let [song, setSong] = useState([]);
@@ -99,41 +99,8 @@ export const Song = () => {
 
   return (
   <div>
-     <h3>SONG LIST</h3>
-    <TableContainer component={Paper}>
-    <Table className={classes.table} size="small" aria-label="customized table">
-        <TableHead>
-            <TableRow>
-                <TableCell><h4>TITLE</h4></TableCell>
-                <TableCell><h4>COMPOSER</h4></TableCell>
-            </TableRow>
-        </TableHead>
 
-    <TableBody>   
-    {song.map(item => {
-      return (
-        <TableRow key={item.id}>
-          <TableCell>{item.title}</TableCell>
-          <TableCell>{item.composer}</TableCell>
-          <TableCell>
-            <DeleteIcon
-              Color="secondary"
-              type="submit"
-              value="submit"
-              //className="btn btn-outline-primary btn-sm"
-              onClick={e => {
-                handleRemove(e, item.id);
-              }}
-            />
-          </TableCell>
-        </TableRow>
-      )
-    })}
-    </TableBody>
-  </Table>
-  </TableContainer> 
-
-  <h3>ADD NEW SONG</h3>
+<h3>ADD NEW SONG</h3>
     <div className="bg-success p-2 text-white bg-opacity-10">
         <form onSubmit={e => handleSubmit(e)}>
           
@@ -163,18 +130,71 @@ export const Song = () => {
           />{" "}
           &nbsp;
 
+          {/* <label htmlFor="composer" className="form-label">
+            Parts:
+          </label> */}
+          <TextField
+            label="Parts"
+            name="parts"
+            id="parts"
+            type="text"
+            //value={input.parts}
+            onChange={e => handleChange(e)}
+          />{" "}
+          &nbsp;
+
           <Button
             variant="outlined"
             type="submit"
             className="btn btn-outline-light"
             value="submit"
-          > SUBMIT
+          > ADD SONG
           </Button>
         </form>
       </div>
 
+  
+
+     <h3>SONG LIST</h3>
+    <TableContainer component={Paper}>
+    <Table className={classes.table} size="small" aria-label="customized table">
+        <TableHead>
+            <TableRow>
+                <TableCell><h4>TITLE</h4></TableCell>
+                <TableCell><h4>COMPOSER</h4></TableCell>
+                <TableCell><h4>PARTS</h4></TableCell>
+            </TableRow>
+        </TableHead>
+
+    <TableBody>   
+    {song.map(item => {
+      return (
+        <TableRow key={item.id}>
+          <TableCell>{item.title}</TableCell>
+          <TableCell>{item.composer}</TableCell>
+          <TableCell>{item.parts}</TableCell>
+          <TableCell>
+            <DeleteIcon
+              Color="secondary"
+              style={{cursor:'pointer'}}
+              type="submit"
+              value="submit"
+              //className="btn btn-outline-primary btn-sm"
+              onClick={e => {
+                handleRemove(e, item.id);
+              }}
+            />
+          </TableCell>
+        </TableRow>
+      )
+    })}
+    </TableBody>
+  </Table>
+  </TableContainer> 
+
   </div>
   )
+  
 }
 
 export default Song;
