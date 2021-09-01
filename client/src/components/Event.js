@@ -13,10 +13,10 @@ import { TextField } from "@material-ui/core";
 // import Container from '@material-ui/core/Container';
 // import { Grid } from '@material-ui/core';
 //import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment'
 
-export const Event = () => {
+export const Event = (props) => {
     let [event, setEvent] = useState([]);
     let [input, setInput] = useState({});
     
@@ -29,7 +29,7 @@ export const Event = () => {
 
       const classes = useStyles();
       
-
+/* 
     const StyledTableCell = withStyles((theme) => ({
         head: {
           backgroundColor: '#ffb74d',
@@ -47,13 +47,14 @@ export const Event = () => {
           },
         },
       }))(TableRow);
+ */
 
+    // useEffect(() => {
+    //     getEvents()
+    // }, []); // check
 
-    useEffect(() => {
-        getEvents();
-    }, []); // check
-
-    const getEvents = () => {
+    // const getEvent = () => {
+      useEffect(() => {
         fetch("/event")
             .then(response => response.json())
             .then(event => {
@@ -69,7 +70,7 @@ export const Event = () => {
             .catch(error => {
                 console.log("Error in GetEvents", error.message);
             });
-    };
+    },[]);
 
 
     const formatDate = (savedDate) => {
@@ -85,11 +86,7 @@ export const Event = () => {
         return newFormat;
         }
 
-        const newFormat = (savedDate) => {
-            let newFormat = new Date(savedDate)
-            newFormat.setMinutes(savedDate.getMinutes() - savedDate.getTimezoneOffset());
-            return newFormat;
-        }
+      
 
     const handleChange = e => {
         //console.log(e.target.value);
@@ -119,6 +116,7 @@ export const Event = () => {
           })
           .then(data => {
             console.log("New Event Added", data);
+            props.updateEvent();
           })
           .catch(err => {
             console.error("Error", err);
@@ -134,10 +132,13 @@ export const Event = () => {
         }
       })
       .then(res => {
+        console.log(res);
         return res.json();
       })
       .then(res => {
+        console.log(res);
         setEvent(res);
+        props.updateEvent();
         console.log("Event Deleted");
       })
       .catch(err => {
@@ -145,7 +146,6 @@ export const Event = () => {
       });
       };
 
-  
   return (
     <div>
 
@@ -163,7 +163,7 @@ export const Event = () => {
             type="text"
             onChange={(e) => handleChange(e)}
           />{" "}
-          &nbsp;
+          &nbsp; &nbsp;
           
           {/* <label htmlFor="location" className="form-label">
             Location:
@@ -176,7 +176,7 @@ export const Event = () => {
             //value={input.location}
             onChange={(e) => handleChange(e)}
           />{" "}
-          &nbsp;
+          &nbsp; &nbsp;
 
           {/* <label htmlFor="date" className="form-label">
             Date:
@@ -188,7 +188,7 @@ export const Event = () => {
             type="date"
             // className={classes.TextField}
             InputLabelProps={{
-                shrink: true,
+                 shrink: true,
             }}
             //value={input.date}
             onChange={(e) => handleChange(e)}

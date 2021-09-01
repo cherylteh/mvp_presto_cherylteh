@@ -81,7 +81,7 @@ router.post("/", function(req, res, next) {
     db(`DELETE FROM event WHERE id=${req.params.id}`)
       .then(results => {
         getAllEvents(req, res);
-        res.send("Event deleted");
+        //res.send("Event deleted");
       })
       .catch(err => res.status(404).send(err));
   });

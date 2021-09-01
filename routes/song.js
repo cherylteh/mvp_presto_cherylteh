@@ -3,7 +3,7 @@ var router = express.Router();
 const db = require("../model/helper");
 
 const getAllSongs = (req, res) => {
-  db("SELECT * FROM songlib ORDER BY id ASC;")
+  db("SELECT * FROM songlib ORDER BY id DESC;")
     .then(results => {
       res.send(results.data);
     })
@@ -13,7 +13,7 @@ const getAllSongs = (req, res) => {
 //GET All Songs (by Id) - WORKS!
 router.get('/', function(req, res, next) {
   //res.send('respond with a resource');
-  db("SELECT * FROM songlib ORDER BY id ASC;")
+  db("SELECT * FROM songlib ORDER BY id DESC;")
     .then(results => {
       res.send(results.data);
     })
@@ -75,10 +75,9 @@ router.post("/", function(req, res, next) {
   //let newSong = req.body;
   db(
     `INSERT INTO songlib (title,composer,parts) VALUES("${req.body.title}", "${req.body.composer}", "${req.body.parts}")`
-  )
-    .then(results => {
+  ).then(results => {
       getAllSongs(req, res); // get full list of Songs
-      res.status(201).send("New song added");
+      //res.status(201).send("New song added");
     })
     .catch(err => res.status(500).send(err));
 });
@@ -105,13 +104,13 @@ router.put("/:id", (req, res, next) => {
     .catch(err => res.status(500).send(err));
 });
 
-// DELETE a student by ID
+// DELETE a song by ID
 router.delete("/:id", function(req, res, next) {
   console.log(req.params);
   db(`DELETE FROM songlib WHERE id=${req.params.id}`)
     .then(results => {
       getAllSongs(req, res);
-      res.send("Song deleted");
+      //res.send("Song deleted");
     })
     .catch(err => res.status(404).send(err));
 });

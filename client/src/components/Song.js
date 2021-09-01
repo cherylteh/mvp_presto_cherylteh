@@ -9,9 +9,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { TextField } from '@material-ui/core';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const Song = () => {
+export const Song = (props) => {
   let [song, setSong] = useState([]);
   let [input, setInput] = useState({});
 
@@ -47,6 +47,7 @@ export const Song = () => {
 
   const handleSubmit = e => {
     addSong();
+    return false;
   };
 
   const handleRemove = (e, id) => {
@@ -64,10 +65,17 @@ export const Song = () => {
     })
       .then(res => {
         return res.json();
+        //console.log(res.json());
+        //
+
       })
       .then(data => {
         //setStudents(data);
+      //  getSong();
+        setSong(data);
         console.log("New Song Added", data);
+        props.updateEvent();
+
       })
       .catch(err => {
         console.error("Error", err);
@@ -90,6 +98,7 @@ export const Song = () => {
       .then(res => {
         console.log(res);
         setSong(res);
+        //props.updateEvent();
         console.log("Song Deleted");
       })
       .catch(err => {
@@ -102,7 +111,7 @@ export const Song = () => {
 
 <h3>ADD NEW SONG</h3>
     <div className="bg-success p-2 text-white bg-opacity-10">
-        <form onSubmit={e => handleSubmit(e)}>
+        <form>
           
           {/* <label htmlFor="title" className="form-label">
             Song Title:
@@ -128,7 +137,7 @@ export const Song = () => {
             //value={input.composer}
             onChange={e => handleChange(e)}
           />{" "}
-          &nbsp;
+          &nbsp; &nbsp;
 
           {/* <label htmlFor="composer" className="form-label">
             Parts:
@@ -141,9 +150,9 @@ export const Song = () => {
             //value={input.parts}
             onChange={e => handleChange(e)}
           />{" "}
-          &nbsp;
+          &nbsp; &nbsp;
 
-          <Button
+          <Button onClick ={(e) => handleSubmit(e)}
             variant="outlined"
             type="submit"
             className="btn btn-outline-light"
@@ -153,9 +162,7 @@ export const Song = () => {
         </form>
       </div>
 
-  
-
-     <h3>SONG LIST</h3>
+    <h3>SONG LIST</h3>
     <TableContainer component={Paper}>
     <Table className={classes.table} size="small" aria-label="customized table">
         <TableHead>
@@ -175,7 +182,7 @@ export const Song = () => {
           <TableCell>{item.parts}</TableCell>
           <TableCell>
             <DeleteIcon
-              Color="secondary"
+              color="primary"
               style={{cursor:'pointer'}}
               type="submit"
               value="submit"
