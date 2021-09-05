@@ -61,7 +61,6 @@ router.post("/", function(req, res, next) {
     particular ="${req.body.particular}",
     folio = ${req.body.folio}, 
     amount_RM = ${req.body.amount_RM},
-    balance_RM = ${req.body.balance_RM}
     WHERE id =${req.params.id};`)
       .then(results => {
         getAll(req, res); // should get back full list of items

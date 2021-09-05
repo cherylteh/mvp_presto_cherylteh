@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {TextField, Table, TableHead, TableBody, TableCell, TableRow} from '@material-ui/core';
-import {Card} from '@material-ui/core';
+import {Card, Button, Grid} from '@material-ui/core';
+// import {makestyles} from '@material-ui/core';
 
 
 
-function Transaction( props){
+function Transaction(props){
     let [transac, setTransac] = useState([]);
     let [input, setInput] = useState({});
     // let [total, setTotal] = useState(0);
@@ -17,8 +18,23 @@ function Transaction( props){
 
     const addTotal = (e) => {
         e.preventDefault();
-        addTransac(); 
+        setInput(e);
+        addTransac();
+        handleBalance();
         console.log("income is added");
+    }
+
+    const formatDate = (savedDate) => {
+        if(savedDate === null) return ""; 
+      
+        let t = savedDate.split(/[-T:.]/)// Split timestamp into [ Y, M, D, h, m, s ]
+        let newFormat = new Date(t[0], t[1]-1, t[2]);// Apply each element to the Date function
+        //let newFormat = new Date(Date.UTC);
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        newFormat.toLocaleDateString(undefined, options)
+        //console.log(newFormat);
+
+        return newFormat;
     }
 
     const handleBalance = (e) => {
@@ -32,6 +48,11 @@ function Transaction( props){
             .then(response => response.json())
             .then(data => {
                 console.log(data);
+                for(let i=0; i<data.length; i++){
+                    let tmpDate = data[i].date;
+                    data[i].date  = `${formatDate(tmpDate)}`;
+                    //console.log(event[i].date);
+                }
                 setTransac(data);
             }) 
             .catch(error => {
@@ -52,8 +73,8 @@ function Transaction( props){
         })
         .then(response => response.json())
         .then(data => {
-            setInput(data)
-            console.log(data)
+            setTransac(data)
+            console.log("post list", data)
             props.transacList();
         })
         .catch(err => {
@@ -61,12 +82,32 @@ function Transaction( props){
         })
     }
 
+    const handleDelete = (id) => {
+        fetch(`/transaction/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              setTransac(data);
+              
+            })
+            .catch(err => {
+              console.log(err);
+            });
+    }
+
+    // const handleReport = () => {
+    //     props.transac()
+    // }
 
     return (
         <div>
             <h1>CASH BOOK</h1>
-            <span><Card className="col-ms">{balance}</Card></span>
-            <button>Report</button>
+            <Card className="col-ms">{balance}</Card>
+           
             <div>
                 <form onSubmit={addTotal}>
                     <TextField 
@@ -108,7 +149,21 @@ function Transaction( props){
                     &nbsp;
                 </form>
 
-                <h5>Transaction List</h5>
+                {" "} &nbsp; &nbsp;
+                <Grid container spacing={3}>
+                    <Grid item xs={3}>
+                        <h5>Transaction List</h5>
+                    </Grid>
+                    <Grid item xs={3}>
+                        
+                    </Grid>
+                    <Grid item xs={3}>
+                        
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Button>Report</Button>
+                    </Grid>
+                </Grid>
                 <Card className="card">
                     <Table>
                         <TableHead>
@@ -122,9 +177,10 @@ function Transaction( props){
                                 return (
                                     <TableRow key={e.id}>
                                         <TableCell>{e.date}</TableCell>
-                                        <TableCell>{e.particular}</TableCell>
+                                        <TableCell >{e.particular}</TableCell>
                                         <TableCell>{e.folio}</TableCell>
                                         <TableCell>{e.amount_RM}</TableCell>
+                                        <TableCell><Button type="click" onClick={()=> handleDelete(e.id)}>X</Button></TableCell>
                                     </TableRow>
                                 )
                             })}
