@@ -49,7 +49,7 @@ router.post("/", function(req, res, next) {
     )
       .then(results => {
         getAll(req, res); // get full list of Songs
-        res.status(201).send("New event added");
+        // res.status(201).send("New event added");
       })
       .catch(err => res.status(500).send(err));
   });
@@ -64,7 +64,7 @@ router.post("/", function(req, res, next) {
     WHERE id =${req.params.id};`)
       .then(results => {
         getAll(req, res); // should get back full list of items
-        res.status(201).send("Event Updated");
+        // res.status(201).send("Event Updated");
       })
       .catch(err => res.status(500).send(err));
   });

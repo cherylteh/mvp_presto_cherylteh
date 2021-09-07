@@ -20,7 +20,8 @@ con.connect(function(err) {
 
   //this needs to be amended to reflect PRESTO
   let sql =
-    "DROP TABLE if exists transaction; CREATE TABLE transaction (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,date DATE, particular VARCHAR(500), folio VARCHAR(400), debit_RM INT, credit_RM INT, total_RM INT);";
+    "DROP TABLE if exists transaction; Drop CREATE TABLE transaction (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,date DATE, particular VARCHAR(500), folio VARCHAR(400), debit_RM INT, credit_RM INT, total_RM INT);";
+    
   con.query(sql, function(err, result) {
     if (err) throw err;
     console.log("Table creation `students` was successful!");

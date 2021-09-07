@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Song from "./components/Song";
 import Event from "./components/Event";
 import Transaction from "./components/transaction";
+import Report from "./components/Report";
 //import "./App.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -12,6 +13,7 @@ function App() {
 
   let [isEvent, setIsEvent] = useState("event");
   let [isTransac, setIsTransac] = useState([]);
+  // let [isReport, setIsReport] = useState("report");
 
   const handleChangeView = (isEvent) => {
     setIsEvent(isEvent);
@@ -32,6 +34,10 @@ function App() {
     console.log("income");
     setIsTransac(isTransac);
   }
+
+  // const reportView = () => {
+  //   eee
+  // }
 
   const useStyles = makeStyles((theme) => ({
     root: {

@@ -1,15 +1,31 @@
 import React, {useState, useEffect} from 'react';
-import {TextField, Table, TableHead, TableBody, TableCell, TableRow} from '@material-ui/core';
+import Report from "./Report";
+import {TextField, Table, TableHead, TableBody, TableCell, TableRow, TablePagination,} from '@material-ui/core';
 import {Card, Button, Grid} from '@material-ui/core';
-// import {makestyles} from '@material-ui/core';
 
-
+const columns = [
+    { id: "date", label: "Date", minWidth: 130},
+    { id: "particular", label: "Particular", minWidth: 200},
+    { id: "folio", label: "Folio", minWidth: 130},
+    {id: "amount", label: "Amount\u00a0(RM)"},
+];
 
 function Transaction(props){
     let [transac, setTransac] = useState([]);
     let [input, setInput] = useState({});
-    // let [total, setTotal] = useState(0);
     let [balance, setBalance] = useState(0);
+    let [report, setReport] = useState(false);
+    let [page, setPage] = useState(0);
+    let [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const handleChangePage = (e, newPage) => {
+        setPage(newPage);
+    }
+   
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    }
 
     const handleInput = e => {
         console.log(e.target.name);
@@ -18,11 +34,20 @@ function Transaction(props){
 
     const addTotal = (e) => {
         e.preventDefault();
-        setInput(e);
         addTransac();
-        handleBalance();
+        setInput();
         console.log("income is added");
     }
+
+    const handleChangeView =(report)=> {
+        console.log(report, "change lah")
+        setReport(report)
+    }
+
+    const reportView = () => {
+        console.log("income");
+        setReport(report);
+      }
 
     const formatDate = (savedDate) => {
         if(savedDate === null) return ""; 
@@ -38,12 +63,17 @@ function Transaction(props){
     }
 
     const handleBalance = (e) => {
+        console.log(e, "Balance added");
         (e.target.value === "+") ? setBalance(balance + parseInt(input.amount)) : setBalance(balance - parseInt(input.amount));
     //    let x = input.amount;
     //    setBalance((balance + x) === true)
     }
 
     useEffect(() =>{
+        getTransaction();
+    },[])
+
+    const getTransaction = () => {
         fetch("/transaction")
             .then(response => response.json())
             .then(data => {
@@ -58,7 +88,7 @@ function Transaction(props){
             .catch(error => {
                 console.log(error);
             })
-    },[])
+    }
 
     const addTransac = () => {
         console.log(input , "input value")
@@ -99,8 +129,8 @@ function Transaction(props){
             });
     }
 
-    // const handleReport = () => {
-    //     props.transac()
+    // const handleChangeReport = (report) => {
+    //     setReport(report);
     // }
 
     return (
@@ -152,28 +182,42 @@ function Transaction(props){
                 {" "} &nbsp; &nbsp;
                 <Grid container spacing={3}>
                     <Grid item xs={3}>
-                        <h5>Transaction List</h5>
+                        <h3>Income List</h3>
                     </Grid>
                     <Grid item xs={3}>
-                        
+
                     </Grid>
                     <Grid item xs={3}>
-                        
+
                     </Grid>
                     <Grid item xs={3}>
-                        <Button>Report</Button>
+                        <button onClick={() => handleChangeView(true)}>Report</button>
+                        {
+                            (report === true) ? <Report isReport={reportView} /> : ""
+                        }
                     </Grid>
                 </Grid>
-                <Card className="card">
+
+                <Card className="income-card">
                     <Table>
                         <TableHead>
-                            <TableCell>Date</TableCell>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                    key={column.id}
+                                    style={{minWidth: column.minWidth}}                     
+                                    >
+                                    {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                            {/* <TableCell>Date</TableCell>
                             <TableCell>Particular</TableCell>
                             <TableCell>Folio</TableCell>
-                            <TableCell>Amount RM</TableCell>
+                            <TableCell>Amount RM</TableCell> */}
                         </TableHead>
                         <TableBody>
-                            {transac.map( e => {
+                            {transac.slice(page* rowsPerPage, page * rowsPerPage + rowsPerPage).map( e => {
                                 return (
                                     <TableRow key={e.id}>
                                         <TableCell>{e.date}</TableCell>
@@ -183,10 +227,20 @@ function Transaction(props){
                                         <TableCell><Button type="click" onClick={()=> handleDelete(e.id)}>X</Button></TableCell>
                                     </TableRow>
                                 )
-                            })}
+                            })} 
                         </TableBody> 
                     </Table>
+                    <TablePagination 
+                    rowsPerPageOptions={[10,25,100]}
+                    component="div"
+                    count={transac.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
                 </Card>
+
             </div>
         </div>
     )
