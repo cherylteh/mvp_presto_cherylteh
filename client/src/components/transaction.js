@@ -45,7 +45,7 @@ function Transaction(props){
     }
 
     const reportView = () => {
-        console.log("income");
+        console.log("transaction");
         setReport(report);
       }
 
@@ -129,10 +129,6 @@ function Transaction(props){
             });
     }
 
-    // const handleChangeReport = (report) => {
-    //     setReport(report);
-    // }
-
     return (
         <div>
             <h1>CASH BOOK</h1>
@@ -192,12 +188,13 @@ function Transaction(props){
                     </Grid>
                     <Grid item xs={3}>
                         <button onClick={() => handleChangeView(true)}>Report</button>
-                        {
-                            (report === true) ? <Report isReport={reportView} /> : ""
-                        }
+                    {
+                    (report === true) ? <Report isReport={reportView} /> : ""
+                    }
                     </Grid>
-                </Grid>
 
+                </Grid>
+                      
                 <Card className="income-card">
                     <Table>
                         <TableHead>
@@ -209,6 +206,7 @@ function Transaction(props){
                                     >
                                     {column.label}
                                     </TableCell>
+                                    
                                 ))}
                             </TableRow>
                             {/* <TableCell>Date</TableCell>
@@ -226,6 +224,7 @@ function Transaction(props){
                                         <TableCell>{e.amount_RM}</TableCell>
                                         <TableCell><Button type="click" onClick={()=> handleDelete(e.id)}>X</Button></TableCell>
                                     </TableRow>
+                                
                                 )
                             })} 
                         </TableBody> 
@@ -240,7 +239,7 @@ function Transaction(props){
                     onRowsPerPageChange={handleChangeRowsPerPage}
                     />
                 </Card>
-
+                
             </div>
         </div>
     )

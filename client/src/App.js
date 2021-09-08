@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Song from "./components/Song";
 import Event from "./components/Event";
 import Transaction from "./components/transaction";
-import Report from "./components/Report";
-//import "./App.css";
+// import Report from "./components/Report";
+// import "./App.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
@@ -34,10 +34,6 @@ function App() {
     console.log("income");
     setIsTransac(isTransac);
   }
-
-  // const reportView = () => {
-  //   eee
-  // }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,6 +71,7 @@ function App() {
       (isEvent === "event") ? <Event updateEvent={eventView}/> : (isEvent === "") ? <Song updateEvent={songView}/> : <Transaction transacList={transacView} />    
     }
   </Container>
+  {/* <Report /> */}
   </div>
   
   )
