@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Song from "./components/Song";
 import Event from "./components/Event";
-//import "./App.css";
+import Transaction from "./components/transaction";
+// import Report from "./components/Report";
+// import "./App.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Button from "@material-ui/core/Button";
@@ -10,9 +12,12 @@ import Container from '@material-ui/core/Container';
 function App() {
 
   let [isEvent, setIsEvent] = useState("event");
+  let [isTransac, setIsTransac] = useState([]);
+  // let [isReport, setIsReport] = useState("report");
 
   const handleChangeView = (isEvent) => {
     setIsEvent(isEvent);
+    setIsTransac(isTransac);
   };
 
   const eventView = () => {
@@ -23,6 +28,11 @@ function App() {
   const songView = () => {
     console.log("song song song");
     setIsEvent("");
+  }
+
+  const transacView = () => {
+    console.log("income");
+    setIsTransac(isTransac);
   }
 
   const useStyles = makeStyles((theme) => ({
@@ -52,15 +62,16 @@ function App() {
       <Box><Button onClick={() => handleChangeView("event")}>Event List</Button></Box>
 
       <Box alignItems="flex-end"><Button color="primary" onClick={() => handleChangeView("")}>Song List</Button></Box>
+      <Box alignItems="flex-end"><Button color="default" onClick={() => handleChangeView([])}>Transaction</Button></Box>
      </Box>
 {/* 
      <span>{isEvent}  is true or false and so the rendered page </span>
       */}
     { 
-      (isEvent === "event") ? <Event updateEvent={eventView}/> : <Song updateEvent={songView}/>     
+      (isEvent === "event") ? <Event updateEvent={eventView}/> : (isEvent === "") ? <Song updateEvent={songView}/> : <Transaction transacList={transacView} />    
     }
-
   </Container>
+  {/* <Report /> */}
   </div>
   
   )

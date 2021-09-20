@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+// import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -14,7 +14,7 @@ import { TextField } from "@material-ui/core";
 // import { Grid } from '@material-ui/core';
 //import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { makeStyles } from '@material-ui/core/styles';
-import moment from 'moment'
+// import moment from 'moment'
 
 export const Event = (props) => {
     let [event, setEvent] = useState([]);
@@ -216,7 +216,7 @@ export const Event = (props) => {
             </TableRow>
         </TableHead>
 
-        <TableBody>
+        {/* <TableBody>
           {event.map((item) => {
             return (
               <TableRow key={item.id}>
@@ -239,7 +239,7 @@ export const Event = (props) => {
               </TableRow>
             )
           })}
-        </TableBody>
+        </TableBody> */}
       </Table>
     </TableContainer>
     

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Button from "@material-ui/core/Button";
-import DeleteIcon from '@material-ui/icons/Delete';
+// import DeleteIcon from '@material-ui/icons/Delete';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
+// import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -50,10 +50,10 @@ export const Song = (props) => {
     return false;
   };
 
-  const handleRemove = (e, id) => {
-    console.log(id);
-    deleteSong(id);
-  };
+  // const handleRemove = (e, id) => {
+  //   console.log(id);
+  //   deleteSong(id);
+  // };
 
   const addSong = () => {
     fetch("/song", {
@@ -173,7 +173,7 @@ export const Song = (props) => {
             </TableRow>
         </TableHead>
 
-    <TableBody>   
+    {/* <TableBody>   
     {song.map(item => {
       return (
         <TableRow key={item.id}>
@@ -195,7 +195,7 @@ export const Song = (props) => {
         </TableRow>
       )
     })}
-    </TableBody>
+    </TableBody> */}
   </Table>
   </TableContainer> 
 

@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var songRouter = require('./routes/song');
 var eventRouter = require('./routes/event');
 var eventSongRouter = require('./routes/eventsong');
+var transactionRouter = require('./routes/transaction');
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use('/', indexRouter);
 app.use('/song', songRouter);
 app.use('/event', eventRouter);
 app.use('/eventsong', eventSongRouter);
+app.use('/transaction', transactionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
