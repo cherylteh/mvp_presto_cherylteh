@@ -54,12 +54,12 @@ Run `node model/database.js` in your **TERMINAL**, in the **project** folder (no
 ## Basic Requirement
 
 ### 1. Database Schema
-https://github.com/cherylteh/mvp_presto_cherylteh/issues/1#issue-984659671
+![MVP_Presto_Schema_20210901](https://user-images.githubusercontent.com/86417917/136499804-5b0de65a-b768-470d-ac4d-873f5f100024.png)
 
 ### 2. API route Plan
-
+- to be updated - 
 
 ### 3. User Flow Chart Diagram
-
+- to be updated - 
 
 _This is a student project that was created at [CodeOp](http://codeop.tech), a full stack development bootcamp 03 in Malaysia._
