@@ -1,5 +1,5 @@
 ## Presto Choir Administration
-Cheryl's Project - for MYS03
+Cheryl's First Solo MVP Project
 
 ## Background
 The Problem - The administrative side of running choirs often takes up a lot of time, time which choir leader could spend on more musical / artistic aspects of leading their choirs. Presto will save choir leaders time in administration and management of the choir.
@@ -10,7 +10,7 @@ For this MVP, Basic Features (for the Administrator) include 2 components:
 1) Music Score Management – Title, Parts, Composer, Arranger, Location (to ease tracking of scores (pdf and physical)
 2) Event / Gig Management – event date, singers list, song list
 
-## Objective
+## Objective of this Project
 - Build a database with Tables
 - Build a React app
 - show the connection between database and React app
