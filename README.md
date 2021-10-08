@@ -8,7 +8,11 @@ Target Audience - Community choir leaders who run smaller choirs <200 pax with l
 
 For this MVP, Basic Features (for the Administrator) include 2 components:
 1) Music Score Management – Title, Parts, Composer, Arranger, Location (to ease tracking of scores (pdf and physical)
-2) Event / Gig Management – event date, singers list, song list
+2) Event / Gig Management – Listing of event title, date, and location. In future, will extend to add singers list and song list
+
+Future Extensions include:
+1) Membership Management
+2) Fees Tracker
 
 ## Objective of this Project
 - Build a database with Tables
