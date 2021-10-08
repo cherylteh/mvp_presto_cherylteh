@@ -1,5 +1,5 @@
-## Presto Choir Administration
-Presto Choir Administration, the first MVP Project for MYS03 which was my first solo MVP Project
+## Presto Choir Administration - Solo Project for CodeOp MYS03 Bootcamp
+For this first solo project, we had to build our own webapp.
 
 ## Background
 The Problem - The administrative side of running choirs often takes up a lot of time, time which choir leader could spend on more musical / artistic aspects of leading their choirs. Presto will save choir leaders time in administration and management of the choir.
